@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <base href="/1.Gamificacion/TacticInstruments/">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Symphonic Tactics — AulaTech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Outfit:wght@400;600;800;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ── LANDING PAGE ── -->
+    <section id="landing-page" class="view landing-cinematic">
+      <div class="sky-bg"></div>
+      <div class="landing-floating-particles"></div>
+      
+      <div class="landing-hero">
+        <div class="brand-reveal">
+          <span class="brand-tag">AULATECH | SYMPHONIC SERIES</span>
+          <h1 class="brand-title">SYMPHONIC<br><span class="accent">TACTICS</span></h1>
+          <p class="brand-tagline">Master the Sound of Victory</p>
+        </div>
+        
+        <div class="landing-cta">
+          <button id="btn-start" class="btn-aaa-primary">DESPLEGAR UNITATS</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MAIN MENU ── (Operations Center) -->
+    <section id="main-menu" class="view hidden menu-operations">
+      <div class="ops-header">
+        <button id="btn-back-landing" class="btn-ops-back">« ARXIUS</button>
+        <div class="ops-title-group">
+          <h2>MAPA D'OPERACIONS</h2>
+          <p>MODE CAMPANYA — NIVELL D'AMENAÇA: SIMFÒNIC</p>
+        </div>
+        <div id="menu-musicoins" class="menu-musicoins-badge">♩ <span id="menu-coins-val">0</span></div>
+        <button id="btn-tutorial" class="btn-tutorial-menu">🎼 TUTORIAL</button>
+      </div>
+      
+      <div class="ops-grid-container">
+        <div id="levels-list" class="ops-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ── DEPLOY SCREEN ── -->
+    <section id="deploy-screen" class="view hidden">
+      <div class="deploy-header">
+        <button id="deploy-back" class="btn-ops-back">« CANCEL·LAR</button>
+        <div class="deploy-title-group">
+          <span class="deploy-phase-tag">FASE DE DESPLEGAMENT</span>
+          <h2 id="deploy-level-title">—</h2>
+        </div>
+        <div class="deploy-budget-display" id="deploy-budget-display">
+          <span class="budget-label">MUSICOINS</span>
+          <span id="budget-used">0</span>
+          <span class="budget-sep">/</span>
+          <span id="budget-max">20</span>
+          <div id="budget-bar-wrap"><div id="budget-bar-fill"></div></div>
+        </div>
+      </div>
+
+      <div class="deploy-main">
+        <!-- Left: Enemy intel -->
+        <aside class="deploy-panel deploy-enemy-panel">
+          <h3 class="panel-title"><span class="panel-dot red"></span>INTEL·LIGÈNCIA ENEMIGA</h3>
+          <div id="enemy-roster"></div>
+        </aside>
+
+        <!-- Center: Instrument catalog -->
+        <div class="deploy-catalog-zone">
+          <div class="catalog-filters" id="catalog-filters"></div>
+          <div id="catalog-grid"></div>
+        </div>
+
+        <!-- Right: Player roster -->
+        <aside class="deploy-panel deploy-player-panel">
+          <h3 class="panel-title"><span class="panel-dot blue"></span>LA TEVA ESCUADRA <span id="roster-count">(0/12)</span></h3>
+          <div id="player-roster"></div>
+          <button id="deploy-confirm" class="btn-deploy" disabled>⚔ DESPLEGAR</button>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ── UNIT DETAIL MODAL ── -->
+    <div id="unit-detail-modal" class="unit-modal-overlay hidden">
+      <div class="unit-modal-card">
+        <button class="unit-modal-close" id="unit-modal-close">✕</button>
+        <div class="unit-modal-body">
+          <div class="unit-modal-left">
+            <div class="unit-modal-sprite-wrap">
+              <img id="unit-modal-sprite" src="" alt="">
+            </div>
+            <div class="unit-modal-family-tag" id="unit-modal-family"></div>
+          </div>
+          <div class="unit-modal-right">
+            <div class="unit-modal-header">
+              <h2 class="unit-modal-name" id="unit-modal-name"></h2>
+              <div class="unit-modal-rol" id="unit-modal-rol"></div>
+            </div>
+            <p class="unit-modal-org" id="unit-modal-org"></p>
+            <div class="unit-modal-stats" id="unit-modal-stats"></div>
+            <button class="unit-modal-add" id="unit-modal-add">+ AFEGIR A L'ESCUADRÓ</button>
+            <div class="unit-modal-cant" id="unit-modal-cant" style="display:none">Sense pressupost suficient</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── GAME HUD ── (oculto inicialmente) -->
+    <div id="game-hud" class="hidden">
+      <header id="hud-top">
+        <div id="logo">
+          <span class="logo-sym">♩</span>
+          <span class="logo-title">SYMPHONIC TACTICS</span>
+        </div>
+
+        <div id="initiative-bar">
+          <span class="init-label">SEGÜENT:</span>
+          <div id="init-queue"></div>
+        </div>
+
+        <div id="hud-actions">
+          <button id="btn-back-menu" class="btn-back">SORTIR</button>
+        </div>
+      </header>
+
+      <!-- Elementos ocultos referenciados por JS (mission info) -->
+      <div style="display:none">
+        <div id="mission-objectives"></div>
+        <span id="team1-name"></span>
+        <span id="team2-name"></span>
+      </div>
+
+      <!-- Victory/Defeat Overlays -->
+      <div id="result-overlay" class="fullscreen-overlay hidden">
+        <div class="result-content">
+          <h2 id="result-title">VICTÒRIA</h2>
+          <p id="result-message">Has derrotat als teus rivals</p>
+          <div id="result-rewards"></div>
+          <div class="result-buttons">
+            <button id="btn-next-level" class="btn-main">Següent Nivell →</button>
+            <button id="btn-retry" class="btn-secundary">Reintentar</button>
+            <button id="btn-menu" class="btn-secundary">Menú Principal</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── GAME AREA ── (oculto inicialmente) -->
+    <main id="game-container" class="hidden">
+      <!-- ── GAMEPLAY AREA ── -->
+      <div id="game-area">
+        <canvas id="game-canvas"></canvas>
+      </div>
+
+      <!-- ── PREMIUM COMMAND CENTER ── -->
+      <footer id="hud-bottom">
+        <div id="unit-deck">
+          
+          <!-- 1. LEFT: THE SOUL (Portrait) -->
+          <div id="unit-portrait-zone">
+            <div id="round-badge">R<span id="turn-n">1</span></div>
+            <div id="unit-portrait-bg">
+               <img id="unit-portrait-img" src="" alt="" />
+            </div>
+              <div id="unit-identity">
+                <div id="unit-role-badge-hud" title="Tipus d'unitat"></div>
+                <h2 id="unit-name">SELECCIONA UNITAT</h2>
+                <div id="unit-family-tag">Explora el camp de batalla</div>
+              <!-- Added turn indicators for the specific active unit -->
+              <div id="active-turn-status">
+                <span id="active-turn-name">---</span>
+                <p id="active-turn-hint">Inicia la batalla</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. CENTER: THE POWER (Actions) -->
+          <div id="command-actions-zone">
+             <div class="action-btn" id="btn-action-move">
+                <div class="btn-icon">👢</div>
+                <div class="btn-label">MOURE</div>
+             </div>
+             <div class="action-btn" id="btn-action-attack">
+                <div class="btn-icon">⚔️</div>
+                <div class="btn-label">ATACAR</div>
+             </div>
+             <div id="end-turn-zone">
+                <button id="btn-end-turn" class="btn-premium-small">FI DE TORN</button>
+             </div>
+          </div>
+
+          <!-- 3. RIGHT: THE KNOWLEDGE (Stats & Org) -->
+          <div id="unit-info-zone">
+            <div id="unit-stats-grid"></div>
+            <div id="unit-org-card">
+              <span class="info-label">ORGANOLOGIA</span>
+              <p id="org-text">Dades de l'instrument seleccionat.</p>
+            </div>
+          </div>
+
+        </div>
+      </footer>
+    </main>
+
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
