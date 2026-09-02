@@ -1798,11 +1798,11 @@ function updatePanel(unit) {
     
     // Handheld specific typo mapping for portraits too
     let finalPath = `img/personajes/${base}${suffix}.png`;
-    if (unit.nombre === 'Clarinete' && unit.team === 0) finalPath = 'img/personajes/clarientee1.png';
-    if (unit.nombre === 'Clarinete' && unit.team === 1) finalPath = 'img/personajes/clarinetee2.png';
+    if (unit.nombre === 'Clarinet' && unit.team === 0) finalPath = 'img/personajes/clarientee1.png';
+    if (unit.nombre === 'Clarinet' && unit.team === 1) finalPath = 'img/personajes/clarinetee2.png';
     if (unit.nombre === 'Tuba' && unit.team === 1)      finalPath = 'img/personajes/tunae2.png';
     if (unit.nombre === 'Bombo' && unit.team === 1)     finalPath = 'img/personajes/bomobe2.png';
-    if (unit.nombre === 'Bajo Eléctrico' && unit.team === 1) finalPath = 'img/personajes/bhajoelectricoe2.png';
+    if (unit.nombre === 'Baix Elèctric' && unit.team === 1) finalPath = 'img/personajes/bhajoelectricoe2.png';
     
     pImgEl.src = finalPath;
   }
@@ -1873,6 +1873,7 @@ function showResult(winnerTeam) {
 
   const level = state.currentLevel;
   const isVictory = winnerTeam === 0; // Team1 (player) wins
+  window.AulaTechBridge?.send('tacticinstruments', { completat: isVictory });
 
   overlay.className = 'fullscreen-overlay ' + (isVictory ? 'result-victory' : 'result-defeat');
   title.textContent = isVictory ? 'VICTÒRIA!' : 'DERROTA...';
