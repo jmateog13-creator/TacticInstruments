@@ -1873,7 +1873,8 @@ function showResult(winnerTeam) {
 
   const level = state.currentLevel;
   const isVictory = winnerTeam === 0; // Team1 (player) wins
-  window.AulaTechBridge?.send('tacticinstruments', { completat: isVictory });
+  const esFinal = !!level && LEVELS.findIndex(l => l.id === level.id) === LEVELS.length - 1;
+  window.AulaTechBridge?.send('tacticinstruments', { completat: isVictory && esFinal });
 
   overlay.className = 'fullscreen-overlay ' + (isVictory ? 'result-victory' : 'result-defeat');
   title.textContent = isVictory ? 'VICTÒRIA!' : 'DERROTA...';
